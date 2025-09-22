@@ -1,7 +1,7 @@
 # Ex-1-Developing-AI-Agent-with-PEAS-Description
-### Name:
+### Name:Divya A
 
-### Register Number:
+### Register Number:2305002007
 
 ### Aim:
 To find the PEAS description for the given AI problem and develop an AI agent.
@@ -58,64 +58,70 @@ Step 4: Print total steps taken (optional)
 
 ### Program:
 ```
-class VacuumCleanerAgent:
+class Environment:
     def __init__(self):
-        # Initialize the agent's state (location and dirt status)
-        self.location = "A"  # Initial location (can be "A" or "B")
-        self.dirt_status = {"A": False, "B": False}  # Initial dirt status (False means no dirt)
+        self.tasks = []
 
-    def move_left(self):
-        # Move the agent to the left if possible
-        if self.location == "B":
-            self.location = "A"
+    def add_task(self, task):
+        self.tasks.append(task)
 
-    def move_right(self):
-        # Move the agent to the right if possible
-        if self.location == "A":
-            self.location = "B"
+    def get_next_task(self):
+        if self.tasks:
+            return self.tasks.pop(0)
+        return None
 
-    def suck_dirt(self):
-        # Suck dirt in the current location if there is dirt
-        if self.dirt_status[self.location]:
-            self.dirt_status[self.location] = False
-            print(f"Sucked dirt in location {self.location}")
+# Personal Assistant Agent
+class PersonalAssistant:
+    def __init__(self):
+        self.percepts = []
+        self.actions = []
 
-    def do_nothing(self):
-        # Do nothing
-        pass
+    def perceive(self, environment):
+        # The assistant perceives the environment by checking for new tasks
+        task = environment.get_next_task()
+        if task:
+            self.percepts.append(f"New task received: {task}")
+            return task
+        return None
 
-    def perform_action(self, action):
-        # Perform the specified action
-        if action == "left":
-            self.move_left()
-        elif action == "right":
-            self.move_right()
-        elif action == "suck":
-            self.suck_dirt()
-        elif action == "nothing":
-            self.do_nothing()
+    def act(self, task):
+        # The assistant acts based on the perceived task
+        if task:
+            action = f"Processing task: {task}"
+            self.actions.append(action)
+            print(action)
+            return action
+        return None
+
+# Example usage
+if __name__ == "__main__":
+    # P: Performance Measure (e.g., successfully completed tasks)
+    # E: Environment (The task list)
+    environment = Environment()
+    environment.add_task("Send email to John")
+    environment.add_task("Schedule meeting with Sarah")
+    environment.add_task("Order groceries")
+
+    # A: Actuators (Performing the tasks)
+    assistant = PersonalAssistant()
+
+    # S: Sensors (Perceiving new tasks)
+    print("Personal Assistant started...")
+    while True:
+        task = assistant.perceive(environment)
+        if task:
+            assistant.act(task)
         else:
-            print("Invalid action")
+            print("No more tasks for now.")
+            break
 
-    def print_status(self):
-        # Print the current status of the agent
-        print(f"Location: {self.location}, Dirt Status: {self.dirt_status}")
-
-# Example usage:
-agent = VacuumCleanerAgent()
-
-
-# Move the agent, suck dirt, and do nothing
-
-agent.perform_action("left")
-agent.print_status()
-agent.perform_action("suck")
-agent.print_status()
-agent.perform_action("nothing")
-agent.print_status()
+    print("\nAssistant's perceptions:", assistant.percepts)
+    print("Assistant's actions:", assistant.actions)
 ```
 ### Sample Output:
 
-425810495-d1198ba7-da19-413b-9907-4844afae627f
+<img width="1871" height="220" alt="image" src="https://github.com/user-attachments/assets/e16a2643-c303-4aad-86d5-79bdc7ee9d59" />
+
 
 ### Result:
+The Personal Assistant program was successfully implemented using Python.
